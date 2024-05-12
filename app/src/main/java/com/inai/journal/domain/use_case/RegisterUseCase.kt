@@ -1,0 +1,4 @@
+package com.inai.journal.domain.use_case
+
+class RegisterUseCase {
+}
