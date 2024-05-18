@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
 
+    id  'com.google.protobuf'
     id 'com.google.dagger.hilt.android'
     id 'kotlin-kapt'
 }
@@ -49,6 +50,25 @@ android {
     }
 }
 
+protobuf {
+    protoc { artifact = 'com.google.protobuf:protoc:3.19.2' }
+    plugins {
+        grpc { artifact = 'io.grpc:protoc-gen-grpc-java:1.47.0'
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java { option 'lite' }
+            }
+            task.plugins {
+                grpc {
+                    option 'lite' }
+            }
+        }
+    }
+}
+
 dependencies {
 
     implementation libs.androidx.core.ktx
@@ -76,4 +96,10 @@ dependencies {
 
     //ViewModel
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0'
+
+    // grpc kotlin
+    implementation 'io.grpc:grpc-okhttp:1.47.0'
+    implementation 'io.grpc:grpc-protobuf-lite:1.47.0'
+    implementation 'io.grpc:grpc-stub:1.47.0'
+    implementation 'org.apache.tomcat:annotations-api:6.0.53'
 }
