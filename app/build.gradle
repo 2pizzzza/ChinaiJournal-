@@ -88,18 +88,18 @@ dependencies {
     debugImplementation libs.androidx.ui.test.manifest
 
     //DataStore
-    implementation 'androidx.datastore:datastore-preferences:1.1.1'
+    implementation libs.androidx.datastore.preferences
 
     //dagger hilt
-    implementation 'com.google.dagger:hilt-android:2.51.1'
-    kapt 'com.google.dagger:hilt-android-compiler:2.51.1'
+    implementation libs.hilt.android
+    kapt libs.hilt.android.compiler
 
     //ViewModel
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0'
+    implementation libs.androidx.lifecycle.viewmodel.compose
 
     // grpc kotlin
-    implementation 'io.grpc:grpc-okhttp:1.47.0'
-    implementation 'io.grpc:grpc-protobuf-lite:1.47.0'
-    implementation 'io.grpc:grpc-stub:1.47.0'
-    implementation 'org.apache.tomcat:annotations-api:6.0.53'
+    implementation libs.grpc.okhttp
+    implementation libs.grpc.protobuf.lite
+    implementation libs.grpc.stub
+    implementation libs.annotations.api
 }
