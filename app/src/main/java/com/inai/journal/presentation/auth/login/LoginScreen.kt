@@ -1,5 +1,7 @@
 package com.inai.journal.presentation.auth.login
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -23,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -30,18 +34,28 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.inai.journal.data.local.AuthPreferences
+import com.inai.journal.data.local.DataStoreManager
+import com.inai.journal.platform.GrpcClient
 import com.inai.journal.ui.theme.Purple40
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-@Preview(showSystemUi = true)
+
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavHostController) {
     var username by remember { mutableStateOf(value = "") }
     var password by remember { mutableStateOf(value = "") }
     var showPassword by remember { mutableStateOf(value = false) }
+    var loginError by remember { mutableStateOf<String?>(null) }
+    val context = LocalContext.current
+
+    val authPreferences = remember { AuthPreferences(DataStoreManager.getInstance(context)) }
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = Modifier.fillMaxSize()
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
@@ -50,15 +64,16 @@ fun LoginScreen() {
             )
 
             Spacer(modifier = Modifier.padding(10.dp))
+            loginError?.let {
+                Spacer(modifier = Modifier.padding(10.dp))
+                Text(text = it, color = MaterialTheme.colors.error)
+            }
+            Spacer(modifier = Modifier.padding(10.dp))
 
             OutlinedTextField(
                 value = username,
-                onValueChange = { newText ->
-                    username = newText
-                },
-                label = {
-                    Text(text = "Username")
-                },
+                onValueChange = { newText -> username = newText },
+                label = { Text(text = "Username") },
                 singleLine = true,
                 placeholder = { Text(text = "Type username here") },
                 shape = RoundedCornerShape(percent = 20),
@@ -68,12 +83,8 @@ fun LoginScreen() {
 
             OutlinedTextField(
                 value = password,
-                onValueChange = { newText ->
-                    password = newText
-                },
-                label = {
-                    Text(text = "Password")
-                },
+                onValueChange = { newText -> password = newText },
+                label = { Text(text = "Password") },
                 placeholder = { Text(text = "Type password here") },
                 shape = RoundedCornerShape(percent = 20),
                 singleLine = true,
@@ -84,32 +95,43 @@ fun LoginScreen() {
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 trailingIcon = {
-                    if (showPassword) {
-                        IconButton(onClick = { showPassword = false }) {
-                            Icon(
-                                imageVector = Icons.Filled.Visibility,
-                                contentDescription = "hide_password"
-                            )
-                        }
-                    } else {
-                        IconButton(
-                            onClick = { showPassword = true }) {
-                            Icon(
-                                imageVector = Icons.Filled.VisibilityOff,
-                                contentDescription = "hide_password"
-                            )
-                        }
+                    IconButton(onClick = { showPassword = !showPassword }) {
+                        Icon(
+                            imageVector = if (showPassword) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                            contentDescription = if (showPassword) "Hide password" else "Show password"
+                        )
                     }
                 }
             )
+
             Spacer(modifier = Modifier.padding(10.dp))
+
+            val grpcClient = GrpcClient(authPreferences)
+
             Button(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .width(150.dp)
+                onClick = {
+                    grpcClient.loginStudent(username, password) { token ->
+                        if (token != null) {
+                            Log.d("LoginScreen", "$token")
+                            CoroutineScope(Dispatchers.Main).launch {
+                            navController.navigate("main") {
+                                Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show()
+                                popUpTo("login") { inclusive = true }
+                            }}
+                        } else {
+                            CoroutineScope(Dispatchers.Main).launch {
+                                loginError = "Incorrect username or password"
+                            }
+                        }
+                    }
+
+                },
+                modifier = Modifier.width(150.dp)
             ) {
                 Text(text = "Login")
             }
+
+
         }
     }
 }
