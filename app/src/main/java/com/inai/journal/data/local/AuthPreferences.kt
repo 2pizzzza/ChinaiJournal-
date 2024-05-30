@@ -3,7 +3,7 @@ package com.inai.journal.data.local
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import com.inai.journal.util.Constants.AUTH_KEY
+import com.inai.journal.platform.constant.Constants.AUTH_KEY
 
 class AuthPreferences(private val dataStore: DataStore<Preferences>) {
 
