@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ChinaJournal</string>
+    <string name="notification_text">Es scheint, dass Sie keine Benachrichtigungen haben</string>
 </resources>

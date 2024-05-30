@@ -217,7 +217,7 @@ message GetAttendanceLessonsResponse {
     string group = 2;
     bool is_attended = 3;
   }
-
+  
   google.protobuf.Timestamp date = 1;
   repeated AttendanceLessonsLine attendanceLessonsLine = 2;
 }
