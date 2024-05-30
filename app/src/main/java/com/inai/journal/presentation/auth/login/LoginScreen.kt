@@ -59,6 +59,7 @@ fun LoginScreen() {
                 label = {
                     Text(text = "Username")
                 },
+                singleLine = true,
                 placeholder = { Text(text = "Type username here") },
                 shape = RoundedCornerShape(percent = 20),
             )
@@ -75,6 +76,7 @@ fun LoginScreen() {
                 },
                 placeholder = { Text(text = "Type password here") },
                 shape = RoundedCornerShape(percent = 20),
+                singleLine = true,
                 visualTransformation = if (showPassword) {
                     VisualTransformation.None
                 } else {
