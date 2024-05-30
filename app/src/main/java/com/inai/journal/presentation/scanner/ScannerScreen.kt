@@ -1,27 +1,57 @@
 package com.inai.journal.presentation.scanner
 
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanOptions
 
+
+@Preview(showSystemUi = true)
 @Composable
 fun ScannerScreen(){
-    val cameraPermissionState = rememberPermissionState(android.Manifest.permission.CAMERA)
-
-    if (cameraPermissionState.status.isGranted) {
-        CameraScreen()
-    } else if (cameraPermissionState.status.shouldShowRationale) {
-        Text("Camera Permission permanently denied")
-    } else {
-        SideEffect {
-            cameraPermissionState.run { launchPermissionRequest() }
-        }
-        Text("No Camera Permission")
+    val qrcode = remember {
+        mutableStateOf("Scanner")
     }
+    val context = LocalContext.current
+    val scanLauncher = rememberLauncherForActivityResult(
+        contract = ScanContract(),
+        onResult = { result ->
+            if (result.contents == null) {
+            } else {
+                qrcode.value = result.contents
+                Toast.makeText(context, "Содержимое: ${result.contents}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    )
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-        Text(text = "Scanner")
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = qrcode.value)
+            Button(onClick = {
+                val options = ScanOptions()
+                options.setDesiredBarcodeFormats(ScanOptions.QR_CODE)
+                options.setPrompt("Chinai Journal")
+                options.setBeepEnabled(false)
+                options.setBarcodeImageEnabled(true)
+                scanLauncher.launch(options)
+            }) {
+                Text(text = "Start scan")
+            }
+        }
+
+
     }
 }
+
+
