@@ -75,7 +75,7 @@ fun ProfileScreen( ) {
                         modifier = Modifier.size(150.dp)
                     )
                     Text(
-                        text = "First ${profile.firstName} Last ${profile.lastName}",
+                        text = "${profile.firstName} ${profile.lastName}",
                         style = TextStyle(fontSize = 25.sp)
                     )
                     Text(

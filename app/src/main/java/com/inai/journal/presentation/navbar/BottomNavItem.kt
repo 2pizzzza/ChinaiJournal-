@@ -23,7 +23,7 @@ sealed class BottomNavItem(
 
     object Notification :
         BottomNavItem(
-            "Notification",
+            "Notiz",
             R.drawable.bell,
             "notification"
         )
