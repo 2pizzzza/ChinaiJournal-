@@ -8,8 +8,8 @@ object Constants {
 
 
     object Network {
-        const val GRPC_ADDRESS = "10.0.3.2"
-        const val GRPC_PORT = 8080
+        const val GRPC_ADDRESS = "192.168.1.105"
+        const val GRPC_PORT = 9999
     }
 
 

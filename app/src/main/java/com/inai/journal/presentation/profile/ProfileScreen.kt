@@ -1,5 +1,6 @@
 package com.inai.journal.presentation.profile
 
+import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -26,6 +27,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
+import androidx.navigation.NavController
 import auth.GetStudentProfileDataResponse
 import com.inai.journal.MainActivity
 import com.inai.journal.R
@@ -38,13 +40,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @Composable
-fun ProfileScreen( ) {
+fun ProfileScreen(navController: NavController ) {
     var profileState by remember { mutableStateOf<ProfileState>(ProfileState.Loading) }
     val context = LocalContext.current
     val authPreferences = remember { AuthPreferences(DataStoreManager.getInstance(context)) }
-    val token = remember {
-        mutableStateOf("")
-    }
+
 
     val grpcClient = GrpcClient(authPreferences)
     LaunchedEffect(Unit) {
@@ -89,14 +89,9 @@ fun ProfileScreen( ) {
                     Spacer(modifier = Modifier.padding(10.dp))
                     Button(onClick = {
                         CoroutineScope(Dispatchers.IO).launch {
-                            token.value = authPreferences.getAuthToken().toString()
-                            authPreferences.saveAuthToken("")
-                            grpcClient.logoutStudent(token.value) { success ->
-                                if (success) {
-
-                                } else {
-                                    // Show error message
-                                }
+                            authPreferences.clearAll()
+                            withContext(Dispatchers.Main) {
+                                context.restartApp()
                             }
                         }
                     }) {
@@ -112,6 +107,13 @@ fun ProfileScreen( ) {
             }
         }
     }
+}
+
+fun Context.restartApp() {
+    val intent = packageManager.getLaunchIntentForPackage(packageName)
+    val mainIntent = Intent.makeRestartActivityTask(intent?.component)
+    startActivity(mainIntent)
+    Runtime.getRuntime().exit(0)
 }
 
 sealed class ProfileState {

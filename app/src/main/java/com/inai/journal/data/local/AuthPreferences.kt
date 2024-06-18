@@ -24,6 +24,11 @@ class AuthPreferences(private val dataStore: DataStore<Preferences>) {
         val tokens = preferences[AUTH_KEY]
         return tokens?.firstOrNull()
     }
+    suspend fun clearAll() {
+        dataStore.edit { pref ->
+            pref.clear()
+        }
+    }
 }
 
 

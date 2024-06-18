@@ -39,6 +39,7 @@ class MainActivity : ComponentActivity() {
                     composable("checkAuth") { CheckAuthScreen(navController) }
                     composable("login") { LoginScreen(navController) }
                     composable("main") { MainScreen() }
+                    composable("profileLogout") { ProfileScreen(navController) }
                 }
             }
         }

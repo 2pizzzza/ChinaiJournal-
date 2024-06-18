@@ -15,6 +15,6 @@ fun NavigationHost(navController: NavHostController) {
         composable(BottomNavItem.Home.route) { HomeScreen() }
         composable(BottomNavItem.Scanner.route) { ScannerScreen()}
         composable(BottomNavItem.Notification.route) { NotificationScreen() }
-        composable(BottomNavItem.Profile.route) { ProfileScreen() }
+        composable(BottomNavItem.Profile.route) { ProfileScreen(navController) }
     }
 }

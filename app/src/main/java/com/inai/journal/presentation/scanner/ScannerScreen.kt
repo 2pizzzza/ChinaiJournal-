@@ -4,13 +4,17 @@ package com.inai.journal.presentation.scanner
 
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -18,8 +22,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
@@ -29,6 +33,8 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.inai.journal.R
 import com.inai.journal.presentation.home.frelist
+import com.inai.journal.ui.theme.Milk
+import com.inai.journal.ui.theme.Milk1
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 
@@ -50,9 +56,10 @@ fun ScannerScreen(){
             }
         }
     )
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.anime1))
+    Box(modifier = Modifier.fillMaxSize().background(Color.White), contentAlignment = Alignment.Center){
+        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+            .padding(bottom = 70.dp)) {
+            val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.anime7))
             val isPlaying by remember { mutableStateOf(true) }
             val progress by animateLottieCompositionAsState(
                 composition = composition,
@@ -60,7 +67,8 @@ fun ScannerScreen(){
             LottieAnimation(
                 composition = composition,
                 modifier = Modifier
-                    .size(350.dp),
+                    .size(350.dp)
+                    .padding(start = 60.dp),
                 iterations = LottieConstants.IterateForever,
             )
             Button(onClick = {
@@ -71,10 +79,13 @@ fun ScannerScreen(){
                 options.setBarcodeImageEnabled(true)
                 scanLauncher.launch(options)
             },
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
                 modifier = Modifier
-                    .padding(bottom = 50.dp),
+                    .width(180.dp)
+                    .height(50.dp)
+
             ) {
-                Text(text = "Start scan")
+                Text(text = "Start scan", color = Color.White)
             }
         }
         when(qrcode.value){

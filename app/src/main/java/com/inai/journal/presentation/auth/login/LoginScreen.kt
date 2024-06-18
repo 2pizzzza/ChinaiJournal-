@@ -68,7 +68,7 @@ fun LoginScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Milk1)
+            .background(Color.Black)
     ) {
         Box(
             contentAlignment = Alignment.BottomStart,
@@ -83,7 +83,7 @@ fun LoginScreen(navController: NavHostController) {
                     text = "Hey!",
                     style = TextStyle(
                         fontSize = 50.sp,
-                        color = Milk,
+                        color = Color.White,
                         fontFamily = FontFamily.Monospace
                     )
                 )
@@ -91,7 +91,7 @@ fun LoginScreen(navController: NavHostController) {
                     text = "Welcome Back",
                     style = TextStyle(
                         fontSize = 50.sp,
-                        color = Milk,
+                        color = Color.White,
                         fontFamily = FontFamily.Monospace
                     )
                 )
@@ -102,7 +102,7 @@ fun LoginScreen(navController: NavHostController) {
                 .fillMaxSize()
                 .clip(RoundedCornerShape(topStart = 46.dp, topEnd = 46.dp))
 
-                .background(Milk)
+                .background(Color.White)
         ) {
 
             Column(horizontalAlignment = Alignment.CenterHorizontally,
@@ -114,7 +114,7 @@ fun LoginScreen(navController: NavHostController) {
                     text = "Login",
                     style = TextStyle(
                         fontSize = 50.sp,
-                        color = Milk1,
+                        color = Color.Black,
                         fontFamily = FontFamily.Monospace
                     )
                 )
@@ -193,12 +193,12 @@ fun LoginScreen(navController: NavHostController) {
                                 }
 
                             },
-                            colors = ButtonDefaults.buttonColors(containerColor = Milk1),
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
                             modifier = Modifier
                                 .width(200.dp)
                                 .height(60.dp)
                         ) {
-                            Text(text = "Login", color = Milk, fontSize = 20.sp)
+                            Text(text = "Login", color = Color.White, fontSize = 20.sp)
                         }
 
 

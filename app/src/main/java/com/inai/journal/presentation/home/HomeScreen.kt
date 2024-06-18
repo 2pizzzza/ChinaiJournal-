@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Shapes
@@ -42,6 +43,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.inai.journal.R
 import com.inai.journal.ui.theme.MediumGray
+import com.inai.journal.ui.theme.Milk
+import com.inai.journal.ui.theme.Milk1
 import com.inai.journal.ui.theme.Red
 
 val frelist=  listOf(
@@ -52,7 +55,7 @@ val frelist=  listOf(
 
 @Composable
 fun HomeScreen() {
-    val daysOfWeek = listOf("Mon", "Die", "Mie", "Don", "Fre")
+    val daysOfWeek = listOf("Mo", "Tu", "We", "Th", "Fr")
     var selectedTabIndex by remember { mutableStateOf(0) }
 
     // Список уроков для каждого дня недели
@@ -83,8 +86,11 @@ fun HomeScreen() {
         frelist
     )
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        TabRow(selectedTabIndex) {
+    Column(modifier = Modifier.fillMaxSize().background(Color.White)) {
+        TabRow(selectedTabIndex,
+            containerColor = Color.White,
+            contentColor = Color.Black,
+            ) {
             daysOfWeek.forEachIndexed { index, day ->
                 Tab(
                     text = { Text(day) },
@@ -148,10 +154,12 @@ fun LessonItem(item: Lesson){
                 ){
                     Text(
                         text = item.name,
-                        style = TextStyle(fontSize = 19.sp, fontWeight = FontWeight.W700),
+                        color = Color.Black,
+                        style = TextStyle(fontSize = 19.sp, fontWeight = FontWeight.W700, ),
                         modifier = Modifier.padding(top = 15.dp)
                     )
                     Text(text = item.time,
+                        color = Color.Black,
                         style = TextStyle(fontWeight = FontWeight.W300, fontSize = 12.sp)
                     )
                     Row(
@@ -167,6 +175,7 @@ fun LessonItem(item: Lesson){
                         )
                         Text(
                             text = item.location,
+                            color = Color.Black,
                             modifier = Modifier
                                 .padding(start = 5.dp)
                         )
@@ -184,6 +193,7 @@ fun LessonItem(item: Lesson){
                         )
                         Text(
                             text = item.group,
+                            color = Color.Black,
                             modifier = Modifier
                                 .padding(start = 5.dp)
                         )

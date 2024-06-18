@@ -7,6 +7,7 @@ import auth.LoginStudentRequest
 import auth.LogoutStudentRequest
 import com.google.protobuf.Empty
 import com.inai.journal.data.local.AuthPreferences
+import com.inai.journal.platform.constant.Constants
 import io.grpc.ManagedChannel
 import io.grpc.ManagedChannelBuilder
 import io.grpc.stub.MetadataUtils
@@ -17,7 +18,7 @@ import kotlinx.coroutines.withContext
 
 class GrpcClient(private val authPreferences: AuthPreferences) {
     private val channel: ManagedChannel by lazy {
-        ManagedChannelBuilder.forAddress("192.168.88.124", 9999)
+        ManagedChannelBuilder.forAddress(Constants.Network.GRPC_ADDRESS, Constants.Network.GRPC_PORT)
             .usePlaintext()
             .build()
     }
