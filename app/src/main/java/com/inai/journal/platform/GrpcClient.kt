@@ -17,7 +17,7 @@ import kotlinx.coroutines.withContext
 
 class GrpcClient(private val authPreferences: AuthPreferences) {
     private val channel: ManagedChannel by lazy {
-        ManagedChannelBuilder.forAddress("192.168.169.234", 9999)
+        ManagedChannelBuilder.forAddress("192.168.88.124", 9999)
             .usePlaintext()
             .build()
     }

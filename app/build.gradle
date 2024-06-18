@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId "com.inai.journal"
-        minSdk 31
+        minSdk 30
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -116,6 +116,7 @@ dependencies {
     implementation 'com.google.accompanist:accompanist-permissions:0.34.0'
 
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+    implementation 'com.airbnb.android:lottie-compose:6.3.0'
 
 
 }

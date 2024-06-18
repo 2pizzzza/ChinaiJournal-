@@ -44,6 +44,12 @@ import com.inai.journal.R
 import com.inai.journal.ui.theme.MediumGray
 import com.inai.journal.ui.theme.Red
 
+val frelist=  listOf(
+    Lesson(11, "English", "Lec", "9:30 - 10:50", "213", "Win-1-32", false),
+    Lesson(12, "History", "Pr", "11:00 - 12:20", "214", "Win-1-33", false),
+    Lesson(13, "Biology", "Lec", "13:00 - 14:20", "215", "Win-1-34", false),
+)
+
 @Composable
 fun HomeScreen() {
     val daysOfWeek = listOf("Mon", "Die", "Mie", "Don", "Fre")
@@ -74,11 +80,7 @@ fun HomeScreen() {
             Lesson(10, "Math", "Lec", "11:00 - 12:20", "212", "Win-1-31", false),
         ),
         // Пятница
-        listOf(
-            Lesson(11, "English", "Lec", "9:30 - 10:50", "213", "Win-1-32", true),
-            Lesson(12, "History", "Pr", "11:00 - 12:20", "214", "Win-1-33", false),
-            Lesson(13, "Biology", "Lec", "13:00 - 14:20", "215", "Win-1-34", true),
-        )
+        frelist
     )
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -110,7 +112,7 @@ data class Lesson(
     val time: String,
     val location: String,
     val group: String,
-    val isHear: Boolean
+    var isHear: Boolean
 )
 
 @Composable
